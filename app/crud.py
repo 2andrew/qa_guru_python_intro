@@ -1,6 +1,5 @@
 import json
 from pathlib import Path
-from typing import List, Optional
 
 from app.models import User, UserCreate
 
@@ -8,19 +7,19 @@ BASE_DIR = Path(__file__).resolve().parent
 DATA_FILE = BASE_DIR.parent / "data" / "users.json"
 
 
-def load_users() -> List[User]:
+def load_users() -> list[User]:
     if not DATA_FILE.exists():
         return []
     with open(DATA_FILE, "r") as f:
         return [User(**u) for u in json.load(f)]
 
 
-def save_users(users: List[User]) -> None:
+def save_users(users: list[User]) -> None:
     with open(DATA_FILE, "w") as f:
         json.dump([user.model_dump() for user in users], f, indent=2)
 
 
-def get_user(user_id: int) -> Optional[User]:
+def get_user(user_id: int) -> User | None:
     users = load_users()
     return next((u for u in users if u.id == user_id), None)
 

@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from typing import List, Optional
 from datetime import datetime
 
 
@@ -16,7 +15,7 @@ class UsersListResponse(BaseModel):
     per_page: int
     total: int
     total_pages: int
-    data: List[User]
+    data: list[User]
 
 
 class SingleUserResponse(BaseModel):
@@ -37,7 +36,7 @@ class CreateUserResponse(BaseModel):
 
 class RegisterRequest(BaseModel):
     email: str
-    password: Optional[str] = None
+    password: str | None = None
 
 
 class RegisterSuccessfulResponse(BaseModel):

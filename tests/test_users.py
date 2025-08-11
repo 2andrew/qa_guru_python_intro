@@ -1,14 +1,12 @@
-from fastapi.testclient import TestClient
-
 from app.main import app
+from tests.custom_test_client import CustomTestClient
 
-client = TestClient(app)
+client = CustomTestClient(app)
 
 
 def test_create_user():
     payload = {"name": "Alice", "email": "alice@example.com"}
     response = client.post("/api/users/", json=payload)
-    assert response.status_code == 200
     data = response.json()
     assert data["name"] == "Alice"
     assert data["email"] == "alice@example.com"
@@ -21,7 +19,6 @@ def test_get_existing_user():
     user_id = post_resp.json()["id"]
 
     get_resp = client.get(f"/api/users/{user_id}")
-    assert get_resp.status_code == 200
     data = get_resp.json()
     assert data["name"] == "Bob"
     assert data["email"] == "bob@example.com"
@@ -29,6 +26,5 @@ def test_get_existing_user():
 
 
 def test_get_nonexistent_user():
-    response = client.get("/api/users/999")
-    assert response.status_code == 404
+    response = client.get("/api/users/999", expected_status=404)
     assert response.json()["detail"] == "User not found"

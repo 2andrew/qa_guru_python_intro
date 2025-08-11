@@ -1,0 +1,8 @@
+line-length = 100
+lint.ignore = ["F403", "F405"]
+exclude = [
+    ".git",
+    ".idea",
+    "__pycache__",
+    "ENV",
+]

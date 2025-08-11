@@ -36,4 +36,4 @@ with body
 ```
 
 To check formatting:
-```flake8 .```
+```ruff check```
